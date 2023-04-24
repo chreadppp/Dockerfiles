@@ -33,6 +33,15 @@ jobs:
       with:
           images: |
             docker.io/${{ secrets.DOCKER_USERNAME }}
+    - name: 构建并推送4 image:tags
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        context: ./kubetools/
+        platforms: linux/amd64,linux/arm64
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
 
     - name: 构建并推送 image:tags
       uses: docker/build-push-action@v3
@@ -40,7 +49,7 @@ jobs:
         push: true
         context: ./kubetools/
         platforms: linux/amd64,linux/arm64
-        tags: ${{ secrets.DOCKER_USERNAME }}/reference:${{ steps.changelog.outputs.version }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/reference:1.0
         
     - name: 构建并推送2 image:tags
       uses: docker/build-push-action@v3
@@ -50,11 +59,3 @@ jobs:
         platforms: linux/amd64,linux/arm64
         tags: ${{ secrets.DOCKER_USERNAME }}/reference:${{steps.changelog.outputs.version}}
         
-    - name: 构建并推送4 image:tags
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        context: ./kubetools/
-        platforms: linux/amd64,linux/arm64
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
