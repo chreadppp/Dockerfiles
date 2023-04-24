@@ -20,11 +20,17 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-
+        
+    - name: Log in to the Container registry
+      uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      with:
+          password: ${{ secrets.GITHUB_TOKEN }}          
+          registry: ghcr.io
+          username: ${{ github.actor }}
     - name: 获取 (tags, labels) for Docker 参数
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
+      id: meta
+      uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      with:
           images: |
             my-docker-hub-namespace/my-docker-hub-repository
             ghcr.io/${{ github.repository }}
@@ -44,7 +50,7 @@ jobs:
         push: true
         context: ./kubetools/
         platforms: linux/amd64,linux/arm64
-        tags: ${{ secrets.DOCKER_USERNAME }}/reference:${{ steps.meta.outputs.tags }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/reference:${{steps.changelog.outputs.version}}
         
     - name: 构建并推送4 image:tags
       uses: docker/build-push-action@v3
