@@ -33,7 +33,6 @@ jobs:
         
     - name: 构建并推送2 image:tags
       uses: docker/build-push-action@v3
-      if: steps.create_tag.outputs.successful
       with:
         push: true
         context: ./kubetools/
