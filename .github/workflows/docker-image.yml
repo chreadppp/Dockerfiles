@@ -11,9 +11,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v3
+    
+    - name: CI Docker Login
+      run: |
+        docker login docker.pkg.github.com -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+
     - name: Build the Docker image（kubetools）
       run: |
         cd kubetools && docker build -t docker.pkg.github.com/lqshow/dockerfiles/kubetools:$(date +%s) .
