@@ -30,7 +30,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: 构建Docker image（kubetools）
       run: |
-        cd kubetools && cat env &&source env 
+        cd kubetools && cat env &&  for ENV in  $(cat ./env );do export $ENV ;done
         docker build -t docker.io/corray/$SERVERNAME:$VERSION .
         docker push docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME:$VERSION
         docker tag docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME:$VERSION docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME 
