@@ -1,4 +1,4 @@
-FROM ubuntu:impish-20211102
+FROM ubuntu:20.04
 
 ARG BUILD_DATE
 
@@ -11,7 +11,8 @@ WORKDIR /root
 ENV DEBIAN_FRONTEND noninteractive
 ENV KUBE_PS1_SYMBOL_DEFAULT K
 
-RUN apt-get update && apt-get -y install --no-install-recommends \
+RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list \
+    apt-get update && apt-get -y install --no-install-recommends \
     gnupg \
     curl \
     wget \
