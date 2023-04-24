@@ -27,13 +27,11 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
       
         
-
-
-
-    - name: Build the Docker image（kubetools）
+    - uses: actions/checkout@v3
+    - name: 构建Docker image（kubetools）
       run: |
-        source env
-        cd kubetools && docker build -t docker.io/corray/$SERVERNAME:$VERSION .
+        cd kubetools && cat env &&source env 
+        docker build -t docker.io/corray/$SERVERNAME:$VERSION .
         docker push docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME:$VERSION
         docker tag docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME:$VERSION docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME 
         docker push docker.io/${{ secrets.DOCKER_USERNAME }}/$SERVERNAME:latest
