@@ -11,7 +11,7 @@ WORKDIR /root
 ENV DEBIAN_FRONTEND noninteractive
 ENV KUBE_PS1_SYMBOL_DEFAULT K
 
-RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list \
+RUN sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
     apt-get update && apt-get -y install --no-install-recommends \
     gnupg \
     curl \
