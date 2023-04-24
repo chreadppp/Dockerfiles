@@ -21,6 +21,13 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: 获取 (tags, labels) for Docker 参数
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: |
+            my-docker-hub-namespace/my-docker-hub-repository
+            ghcr.io/${{ github.repository }}
 
     - name: 构建并推送 image:tags
       uses: docker/build-push-action@v3
