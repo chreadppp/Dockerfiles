@@ -3,6 +3,8 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="/root/.oh-my-zsh"
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
