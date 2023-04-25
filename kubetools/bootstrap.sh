@@ -1,10 +1,23 @@
 #!/bin/bash
+
+
+  OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+  ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+
+
+
+LATEST_VERSION(){
+local REPOS=$1
+curl -s https://api.github.com/repos/$REPOS/releases/latest |grep -oP '"tag_name": "\K(.*)(?=")'
+}
+
 echo 'Bootstrap steps start here:'
 
 echo '[STEP 1] Installing k9s awesomeness'
 (
   set -x &&
-  wget -c https://github.com/derailed/k9s/releases/download/v0.27.3/k9s_Linux_amd64.tar.gz -O - | tar -xz &&
+  TAG=$(LATEST_VERSION "derailed/k9s") && 
+  wget -c https://github.com/derailed/k9s/releases/download/$TAG/k9s_Linux_amd64.tar.gz -O - | tar -xz &&
   chmod +x k9s &&
   mv k9s /usr/local/bin/
 )
