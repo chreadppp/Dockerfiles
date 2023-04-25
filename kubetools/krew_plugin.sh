@@ -18,8 +18,9 @@ mkdir /root/.kube
 echo '[STEP 2] Installing Krew'
 (
   set -x; cd "$(mktemp -d)" &&
+  KREW="krew-${OS}_${ARCH}"
   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/$(krew-${OS}_${ARCH}).tar.gz" &&
-  tar zxvf "${KREW}.tar.gz" &&
+  tar zxvf "${KREW}.tar.gz" && rm ${KREW}.tar.gz 
   ./"${KREW}" install krew
 )
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
