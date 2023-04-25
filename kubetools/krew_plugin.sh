@@ -34,7 +34,7 @@ echo '[STEP 3] Installing kubectx and kubens - quickly switch kubernetes context
 
 echo '[STEP 4] Installing stern'
 (
-    TAG=$(LATEST_VERSION "chenjiandongx/kubectl-images")
+    TAG=$(LATEST_VERSION "stern/stern")
     TAD=$(echo $TAG | awk -F "v" '{print$2}')
     wget -c  https://github.com/stern/stern/releases/download/${TAG}/stern_${TAD}_linux_amd64.tar.gz -O - | tar -xz && \
     chmod +x stern && \
